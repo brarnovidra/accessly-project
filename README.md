@@ -83,16 +83,19 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ---
 
 ## 🗄️ Database Migrations & Seeders
+Sudah otomatis ketika docker-compose di jalankan
 
+**Untuk cara manual**
 Masuk ke container backend:
 ```bash
 docker exec -it accessly-backend-express sh
 ```
 
-Jalankan migrasi & seeder:
+Jalankan create, migrasi & seeder:
 ```bash
-npx sequelize-cli db:migrate
-npx sequelize-cli db:seed:all
+npm run db:create
+npm run db:migrate
+npm run db:seeds
 ```
 
 ---
