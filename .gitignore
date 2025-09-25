@@ -1,0 +1,53 @@
+# === Global Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.env
+.env.local
+.env.production
+.env.development
+
+# === Logs ===
+logs
+*.log
+*.out
+*.err
+
+# === OS Generated ===
+.DS_Store
+Thumbs.db
+
+# === Docker ===
+*.local
+docker-compose.override.yml
+
+# === Editor directories ===
+.vscode/
+.idea/
+*.swp
+
+# === Frontend (Next.js) ===
+accessly-frontend-next/.next/
+accessly-frontend-next/out/
+accessly-frontend-next/node_modules/
+accessly-frontend-next/.env
+accessly-frontend-next/.env.local
+accessly-frontend-next/.env.production
+accessly-frontend-next/.env.development
+accessly-frontend-next/package-lock.json
+
+# === Backend (Express.js) ===
+accessly-backend-express/node_modules/
+accessly-backend-express/.env
+accessly-backend-express/.env.local
+accessly-backend-express/.env.production
+accessly-backend-express/.env.development
+accessly-backend-express/package-lock.json
+accessly-backend-express/dist/
+
+# === MySQL Volume (just in case) ===
+mysql-data/
