@@ -83,7 +83,7 @@ export const login = async (req, res) => {
     }
 
     // hanya cari user dengan provider local
-    const user = await User.findOne({ where: { email, provider: 'local' } });
+    const user = await User.findOne({ where: { email, provider: 'local' }, include: [{ model: Membership, as: 'memberships' }]});
     if (!user) return error(res, 'User not found or not registered locally', 404);
 
     // validasi password

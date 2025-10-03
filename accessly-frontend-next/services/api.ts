@@ -26,7 +26,7 @@ export const api = {
       if (refreshed.ok) {
         const jr = await refreshed.json()
 
-        accessToken = jr.data.accessToken
+        accessToken = jr.data.data.accessToken
 
         // Update cookie
         (Cookies as typeof import('js-cookie')).set('accessToken', accessToken, { expires: 1, sameSite: 'Strict' })

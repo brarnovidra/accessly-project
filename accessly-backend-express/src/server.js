@@ -37,8 +37,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/content', contentRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/contents', contentRoutes);
+app.use('/api/users', userRoutes);
 app.use("/api/memberships", membershipRoutes);
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));

@@ -1,30 +1,80 @@
-import { Content, User, Membership } from '../database/models/index.js';
-import { success, error } from '../utils/response.js';
+import { Op } from "sequelize";
+import { Content } from "../database/models/index.js";
+import { success, error } from "../utils/response.js";
+import { buildPagination } from "../utils/pagination.js";
 
 export const getContent = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const { page, limit, offset, search, filterBy, filterValue } = req.pagination;
 
-    const user = await User.findByPk(userId, {
-      include: [{ model: Membership, as: 'membership' }],
-    });
+    // Build where clause
+    const where = {};
 
-    if (!user || !user.membership) {
-      return error(res, "User has no membership", 403);
+    if (search) {
+      where.title = { [Op.like]: `%${search}%` };
     }
 
-    const contents = await Content.findAll({
-      include: [
-        {
-          model: Membership,
-          where: { id: user.membership.id },
-          through: { attributes: [] }, 
-        },
-      ],
-      order: [["id", "DESC"]],
+    if (filterBy && filterValue) {
+      where[filterBy] = filterValue;
+    }
+
+    const { count, rows } = await Content.findAndCountAll({
+      where,
+      offset,
+      limit
     });
 
-    return success(res, "Content loaded", { contents });
+    return success(res, "Contents retrieved", {
+      contents: rows,
+      pagination: buildPagination(count, { page, limit }),
+    });
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+export const getContentById = async (req, res) => {
+  try {
+    const Content = await Content.findByPk(req.params.id);
+    if (!Content) return error(res, "Content not found", 404);
+    return success(res, "Content retrieved", Content);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+export const createContent = async (req, res) => {
+  try {
+    const { type } = req.body;
+    const Content = await Content.create({ type });
+    return success(res, "Content created", Content);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+export const updateContent = async (req, res) => {
+  try {
+    const { type } = req.body;
+    const Content = await Content.findByPk(req.params.id);
+    if (!Content) return error(res, "Content not found", 404);
+
+    Content.type = type || Content.type;
+    await Content.save();
+
+    return success(res, "Content updated", Content);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+export const deleteContent = async (req, res) => {
+  try {
+    const Content = await Content.findByPk(req.params.id);
+    if (!Content) return error(res, "Content not found", 404);
+
+    await Content.destroy();
+    return success(res, "Content deleted");
   } catch (err) {
     return error(res, err.message, 500);
   }

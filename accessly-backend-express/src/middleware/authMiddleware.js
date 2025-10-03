@@ -18,7 +18,7 @@ export const authenticate = async (req, res, next) => {
     const user = await User.findByPk(decoded.id, { 
       include: {
         model: Membership,
-        as: 'membership'
+        as: 'memberships'
       }
     });
 

@@ -4,9 +4,9 @@ export default (sequelize) => {
   class Content extends Model {
     static associate(models) {
       Content.belongsToMany(models.Membership, {
-        through: 'content_memberships',
-        foreignKey: 'content_id',
-        otherKey: 'membership_id'
+        through: "content_memberships",
+        as: "memberships",
+        foreignKey: "content_id",
       });
     }
   }

@@ -6,7 +6,7 @@ export default (sequelize) => {
     static associate(models) {
       User.belongsTo(models.Membership, {
         foreignKey: 'membership_id',
-        as: 'membership',
+        as: 'memberships',
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },

@@ -11,9 +11,9 @@ export default (sequelize) => {
       });
 
       Membership.belongsToMany(models.Content, {
-        through: 'content_memberships',
-        foreignKey: 'membership_id',
-        otherKey: 'content_id'
+        through: "content_memberships",
+        as: "contents",
+        foreignKey: "membership_id",
       });
     }
   }
