@@ -4,6 +4,7 @@ Aplikasi ini terdiri dari:
 - **Frontend**: Next.js (TypeScript + TailwindCSS)
 - **Backend**: Express.js (Sequelize ORM, JWT Auth, Social Login)
 - **Database**: MySQL
+- **Redis**: Cache management
 
 Semua service dikelola dengan **Docker Compose**.
 
